@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-int main(int argc, char* argv[])
+int Inputfile(int argc, char* argv[])
 {
 	std::string filename = "Prueba.txt";
 	InputFile myFile;

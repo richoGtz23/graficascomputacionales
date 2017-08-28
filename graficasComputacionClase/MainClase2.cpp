@@ -1,4 +1,4 @@
-#include <GL/glew.h>
+/*#include <GL/glew.h>
 #include <GL/freeglut.h>
 
 void GameLoop() {
@@ -33,4 +33,4 @@ int triangulo(int argc, char* argv[]) {
 
 	glutMainLoop();
     return 0;
-}
+}*/

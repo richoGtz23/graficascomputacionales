@@ -33,6 +33,9 @@
     <ClCompile Include="MainPruebaInputFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="mainClase3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Circle.h">

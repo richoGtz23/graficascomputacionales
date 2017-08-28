@@ -121,6 +121,7 @@
     <ClCompile Include="Employee.cpp" />
     <ClCompile Include="InputFile.cpp" />
     <ClCompile Include="MainClase2.cpp" />
+    <ClCompile Include="mainClase3.cpp" />
     <ClCompile Include="MainPruebaInputFile.cpp" />
     <ClCompile Include="Rectangle.cpp" />
   </ItemGroup>
