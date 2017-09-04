@@ -117,6 +117,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\201713-TC3022-2\201713-TC3022-2\Main.cpp" />
     <ClCompile Include="Circle.cpp" />
     <ClCompile Include="Employee.cpp" />
     <ClCompile Include="InputFile.cpp" />
@@ -133,6 +134,12 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Prueba.txt" />
+    <Text Include="DiscardCenter.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Default.frag" />
+    <None Include="Default.vert" />
+    <None Include="DiscardCenter.frag" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

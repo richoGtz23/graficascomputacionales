@@ -36,6 +36,9 @@
     <ClCompile Include="mainClase3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\201713-TC3022-2\201713-TC3022-2\Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Circle.h">
@@ -53,5 +56,19 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Prueba.txt" />
+    <Text Include="DiscardCenter.vert">
+      <Filter>Source Files</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Default.frag">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="Default.vert">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="DiscardCenter.frag">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

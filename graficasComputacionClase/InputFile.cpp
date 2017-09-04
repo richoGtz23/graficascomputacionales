@@ -1,27 +1,33 @@
-/*********************************************************
-Materia: Gráficas Computacionales
-Fecha: 21 de agosto del 2017
-Autor: A01376121 Luis Ricardo Gutiérrez
-*********************************************************/
 #include "InputFile.h"
-#include <string>
-#include <iostream>
-#include <fstream>
 
-bool InputFile::Read(std::string fName) {
-	_contents = "";
-	std::ifstream f;
-	f.open(fName);
-	if (f){
-		std::string str;
-		while (std::getline(f, str)){
-			_contents = _contents + str + "\n";
-		}
-		return true;
+#include <fstream>
+#include <iostream>
+#include <sstream>
+
+bool InputFile::Read(const std::string& filename)
+{
+	if (filename.empty())
+	{
+		std::cout << "No filename provided" << std::endl;
+		return false;
 	}
-	return false;
+
+	std::fstream inputFile(filename, std::fstream::in);
+
+	if (!inputFile.is_open())
+	{
+		std::cout << "Could not open file " << filename << std::endl;
+		return false;
+	}
+
+	std::stringstream ss;
+	ss << inputFile.rdbuf();
+	_contents = ss.str();
+
+	return true;
 }
 
-std::string InputFile::GetContents() {
+const std::string InputFile::GetContents() const
+{
 	return _contents;
 }

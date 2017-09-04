@@ -1,4 +1,4 @@
-#include <GL/glew.h>
+/*#include <GL/glew.h>
 #include <GL/freeglut.h>
 #include <vector>
 #include <glm/glm.hpp>
@@ -69,4 +69,4 @@ int main(int argc, char* argv[]) {
 
 	glutMainLoop();
 	return 0;
-}
+}*/
