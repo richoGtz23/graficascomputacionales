@@ -117,14 +117,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\201713-TC3022-2\201713-TC3022-2\Main.cpp" />
+    <ClCompile Include="..\..\201713-TC3022-2\201713-TC3022-2\MainExamen.cpp" />
     <ClCompile Include="Circle.cpp" />
     <ClCompile Include="Employee.cpp" />
     <ClCompile Include="InputFile.cpp" />
     <ClCompile Include="MainClase2.cpp" />
     <ClCompile Include="mainClase3.cpp" />
+    <ClCompile Include="mainPenatgono.cpp" />
     <ClCompile Include="MainPruebaInputFile.cpp" />
     <ClCompile Include="Rectangle.cpp" />
+    <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Circle.h" />

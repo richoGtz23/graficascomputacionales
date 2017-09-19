@@ -36,7 +36,13 @@
     <ClCompile Include="mainClase3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\201713-TC3022-2\201713-TC3022-2\Main.cpp">
+    <ClCompile Include="..\..\201713-TC3022-2\201713-TC3022-2\MainExamen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mainPenatgono.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
