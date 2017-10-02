@@ -3,7 +3,7 @@ Materia: Graficas Computacionales
 Fecha: 18 de septiembre de 2017
 Autor: A01376121 Luis Ricardo Gutiérrez
 *******************/
-#include <GL/glew.h>
+/*#include <GL/glew.h>
 #include <GL/freeglut.h>
 #include <iostream>
 #include <glm/glm.hpp>
@@ -182,4 +182,4 @@ int main(int argc, char* argv[])
 	glutMainLoop();
 
 	return 0;
-}
+}*/
