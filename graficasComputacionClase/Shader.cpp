@@ -1,24 +1,36 @@
 #include "Shader.h"
-#include "InputFile.h"
 
-shader::shader() {
+#include "InputFile.h"
+#include <vector>
+
+Shader::Shader()
+{
 	_shaderHandle = 0;
 }
-shader::~shader() {
+
+Shader::~Shader()
+{
 	glDeleteShader(_shaderHandle);
 }
-void shader::CreateShader(std::string path, GLenum type) {
-	if (_shaderHandle != 0) {
-		glDeleteShader(_shaderHandle);
-	}
+
+void Shader::CreateShader(std::string path, GLenum type)
+{
 	InputFile ifile;
-	ifile.Read(path);
-	std::string vertexSource = ifile.GetContents();
+	if (!ifile.Read(path)) return;
+	std::string source = ifile.GetContents();
+
+	if (_shaderHandle)
+		glDeleteShader(_shaderHandle);
+
 	_shaderHandle = glCreateShader(type);
-	const GLchar *vertexSource_c = (const GLchar*)vertexSource.c_str();
-	glShaderSource(_shaderHandle, 1, &vertexSource_c, nullptr);
+
+	const GLchar *source_c = (const GLchar*)source.c_str();
+	glShaderSource(_shaderHandle, 1, &source_c, nullptr);
+
 	glCompileShader(_shaderHandle);
 }
-GLuint shader::GetHandle() {
+
+GLuint Shader::GetHandle()
+{
 	return _shaderHandle;
 }
