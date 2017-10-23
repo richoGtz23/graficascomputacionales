@@ -3,7 +3,7 @@ Materia: Gráficas Computacionales
 Fecha: 16 de agosto del 2017
 Autor: A01375051 Luis Ricardo Gutiérrez
 *********************************************************/
-
+/*
 #include <iostream>
 #include <GL/glew.h>
 #include <GL/freeglut.h>
@@ -23,7 +23,12 @@ using namespace glm;
 Mesh mesh;
 ShaderProgram program;
 Transform _transform;
+Transform _transform2;
+Transform _transform3;
+Transform _transform4;
+Transform _transform5;
 Camera _camera;
+int cont = 0;
 
 void Initialize() {
 
@@ -107,8 +112,8 @@ void Initialize() {
 												   												   	
 	vector<unsigned int> indices = { 
 		0, 1, 2, 2, 1, 3,
-		8, 9, 10, 10, 9, 11,
 		4, 5, 6, 6, 5, 7,
+		8, 9, 10, 10, 9, 11,
 		12, 13, 14, 14, 13, 15,
 		16, 17, 18, 18, 17, 19,
 		20,21,22,22,21,23,
@@ -125,19 +130,40 @@ void Initialize() {
 	program.SetAttribute(1, "VertexColor");
 	program.LinkProgram();
 
-	//_transform.SetRotation(0.0f, 0.0f, 45.0f);
-	_camera.SetOrthographic(6.0f, 1.0f);
+	//_camera.SetOrthographic(6.0f, 1.0f);
+	_camera.MoveUp(5,true);
+	_camera.MoveForward(25,true);
+	_camera.SetRotation(-30.0f,0.0f,0.0f);
 }
 
 void GameLoop() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+	cont++;
+	if (cont%1550==0) {
+		glClearColor(glm::sin(glm::radians(float(cont))), glm::cos(glm::radians(float(cont))), glm::cos(glm::radians(float(cont)))*glm::sin(glm::radians(float(cont))), 0.0f);
+	}
 	//_camera.MoveForward(0.0001f);
-	_transform.Rotate(0.01f, 0.01f, 0.01f, true);//Rotación Global
-	//_transform.Rotate(0.01f, 0.01f, 0.01f, false);//Rotación Local
-
+	//_transform.Rotate(0.0f, 0.01f, 0.0f, true);//Rotación Global
+	_camera.Rotate(0.0f, 0.005f, 0.0f, true);
+	_transform.Rotate(0.0f, 0.0f, 0.02f, true);//Rotación Local
+	_transform2.SetScale(12.0f, 0.2f, 12.0f);
+	_transform2.SetPosition(0.0f, -5.0f, 0.0f);
+	_transform3.SetPosition(20.0f,0.0f,0.0f);
+	_transform3.Rotate(0.02f,0.0f,0.0f,true);
+	_transform4.SetPosition(-20.0f, 0.0f, 0.0f);
+	_transform5.SetPosition(-20.0f, 6.0f, 0.0f);
+	_transform4.Rotate(0.0f, 0.02f, 0.0f, true);
+	_transform5.Rotate(0.0f, -0.02f, 0.0f, true);
 	program.Activate();
 	program.SetUniformMatrix("mvplMatrix", _camera.GetViewProjection()* _transform.GetModelMatrix());
+	mesh.Draw(GL_TRIANGLES);
+	program.SetUniformMatrix("mvplMatrix", _camera.GetViewProjection()* _transform2.GetModelMatrix());
+	mesh.Draw(GL_TRIANGLES);
+	program.SetUniformMatrix("mvplMatrix", _camera.GetViewProjection()* _transform3.GetModelMatrix());
+	mesh.Draw(GL_TRIANGLES);
+	program.SetUniformMatrix("mvplMatrix", _camera.GetViewProjection()* _transform4.GetModelMatrix());
+	mesh.Draw(GL_TRIANGLES);
+	program.SetUniformMatrix("mvplMatrix", _camera.GetViewProjection()* _transform5.GetModelMatrix());
 	mesh.Draw(GL_TRIANGLES);
 	program.Deactivate();
 
@@ -195,7 +221,7 @@ int main(int argc, char* argv[]) {
 
 	glEnable(GL_DEPTH_TEST);
 	std::cout << glGetString(GL_VERSION) << std::endl;
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
 
 	// Configuración inicial de nuestro programa
 	Initialize();
@@ -203,4 +229,4 @@ int main(int argc, char* argv[]) {
 	glutMainLoop();
 
 	return 0;
-}
+}*/

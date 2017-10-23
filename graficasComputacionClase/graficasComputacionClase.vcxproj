@@ -126,6 +126,7 @@
     <ClCompile Include="mainClase3.cpp" />
     <ClCompile Include="mainCuaterniones.cpp" />
     <ClCompile Include="mainCubo.cpp" />
+    <ClCompile Include="mainExamen2.cpp" />
     <ClCompile Include="mainPenatgono.cpp" />
     <ClCompile Include="MainPruebaInputFile.cpp" />
     <ClCompile Include="Mesh.cpp" />
