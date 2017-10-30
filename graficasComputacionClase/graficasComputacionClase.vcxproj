@@ -129,6 +129,7 @@
     <ClCompile Include="mainExamen2.cpp" />
     <ClCompile Include="mainPenatgono.cpp" />
     <ClCompile Include="MainPruebaInputFile.cpp" />
+    <ClCompile Include="mainSombras.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="Shader.cpp" />

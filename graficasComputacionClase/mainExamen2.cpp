@@ -1,9 +1,9 @@
 /*********************************************************
 Materia: Gráficas Computacionales
-Fecha: 16 de agosto del 2017
+Fecha: 23 de Octubre del 2017
 Autor: A01370699 Abraham Soto
 Autor: A01376121 Luis Ricardo Gutierrez
-*********************************************************/
+*********************************************************//*
 #include <iostream>
 #include <GL/glew.h>
 #include <GL/freeglut.h>
@@ -104,8 +104,8 @@ void GameLoop() {
 	program.SetUniformMatrix("mvplMatrix", _camera.GetViewProjection()* _transform.GetModelMatrix());
 	mesh.Draw(GL_TRIANGLES);
 
-	/*program.SetUniformMatrix("mvplMatrix", _camera.GetViewProjection()* _transform.GetModelMatrix());
-	mesh.Draw(GL_TRIANGLES)*/
+	//program.SetUniformMatrix("mvplMatrix", _camera.GetViewProjection()* _transform.GetModelMatrix());
+	//mesh.Draw(GL_TRIANGLES)
 
 	program.SetUniformMatrix("mvplMatrix", _camera.GetViewProjection()* _transform2.GetModelMatrix());
 	mesh.Draw(GL_TRIANGLES);
@@ -175,4 +175,4 @@ int main(int argc, char* argv[]) {
 	glutMainLoop();
 
 	return 0;
-}
+}*/

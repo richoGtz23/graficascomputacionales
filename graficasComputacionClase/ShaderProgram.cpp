@@ -77,6 +77,10 @@ void ShaderProgram::SetUniformMatrix(std::string name, mat4 matrix) {
 	GLuint uniformLocation = glGetUniformLocation(_programHandle, name.c_str());
 	glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, value_ptr(matrix));
 }
+void ShaderProgram::SetUniformMatrix3(string name, glm::mat3 matrix){
+	GLint uniformLocation = glGetUniformLocation(_programHandle, (const GLchar*)name.c_str());
+	glUniformMatrix3fv(uniformLocation, 1, GL_FALSE, glm::value_ptr(matrix));
+}
 void ShaderProgram::DeleteAndDetachShaders()
 {
 	for (size_t i = 0; i < _attachedShaders.size(); i++)
@@ -89,4 +93,9 @@ void ShaderProgram::DeleteProgram()
 {
 	DeleteAndDetachShaders();
 	glDeleteProgram(_programHandle);
+}
+void ShaderProgram::SetUniformf(std::string name, vec3 pos)
+{
+	GLint uniformLocation = glGetUniformLocation(_programHandle, name.c_str());
+	glUniform3fv(uniformLocation,1 ,&pos[0]);
 }
