@@ -132,13 +132,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\..\..\..\Downloads\cratetexture.jpg">
+    <Image Include="base.jpg">
       <Filter>Source Files</Filter>
     </Image>
-    <Image Include="..\..\..\..\..\..\Downloads\cerdito.jpg">
+    <Image Include="cerdito.jpg">
       <Filter>Source Files</Filter>
     </Image>
-    <Image Include="..\..\..\..\..\..\Downloads\base.jpg">
+    <Image Include="cratetexture.jpg">
       <Filter>Source Files</Filter>
     </Image>
   </ItemGroup>

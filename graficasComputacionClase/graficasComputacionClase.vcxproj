@@ -162,9 +162,9 @@
     <None Include="DiscardCenter.frag" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\..\..\..\Downloads\base.jpg" />
-    <Image Include="..\..\..\..\..\..\Downloads\cerdito.jpg" />
-    <Image Include="..\..\..\..\..\..\Downloads\cratetexture.jpg" />
+    <Image Include="base.jpg" />
+    <Image Include="cerdito.jpg" />
+    <Image Include="cratetexture.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
