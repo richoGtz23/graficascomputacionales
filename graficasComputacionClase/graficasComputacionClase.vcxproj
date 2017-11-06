@@ -135,6 +135,7 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +147,7 @@
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderProgram.h" />
+    <ClInclude Include="Texture2D.h" />
     <ClInclude Include="Transform.h" />
   </ItemGroup>
   <ItemGroup>
@@ -155,7 +157,14 @@
   <ItemGroup>
     <None Include="Default.frag" />
     <None Include="Default.vert" />
+    <None Include="defaultTexture.frag" />
+    <None Include="defaultTexture.vert" />
     <None Include="DiscardCenter.frag" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\..\..\Downloads\base.jpg" />
+    <Image Include="..\..\..\..\..\..\Downloads\cerdito.jpg" />
+    <Image Include="..\..\..\..\..\..\Downloads\cratetexture.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

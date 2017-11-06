@@ -17,6 +17,8 @@ Autor: A01376121 Josep Romagosa
 #include "ShaderProgram.h"
 #include "Transform.h"
 #include "Camera.h"
+#include <IL/il.h>
+#include "Texture2D.h"
 using namespace std;
 using namespace glm;
 
@@ -32,12 +34,22 @@ mat4 modelMatrix2;
 mat3 normalMatrix2;
 vec3  lightColor = vec3(1.0f, 1.0f, 1.0f);
 vec3 lightPosition = vec3(5.0f, 0.0f, 10.0f);
+Texture2D crate;
+Texture2D cerdo;
+Texture2D base;
+
+
 void Initialize() {
 
 	vector<vec3> positions;
 	vector<vec3> colors;
 	vector<vec3> normals;
+	vector<vec2> textures;
 
+	crate.LoadTexture("cratetexture.jpg");
+	base.LoadTexture("base.jpg");
+	cerdo.LoadTexture("cerdito.jpg");
+	/*
 	vec3 amarillo = vec3(1.0f, 1.0f, 0.0f);
 	vec3 morado = vec3(0.55f, 0.00f, 0.55f);
 	vec3 rojo = vec3(1.0f, 0.0f, 0.0f);
@@ -72,7 +84,7 @@ void Initialize() {
 	colors.push_back(gris);
 	colors.push_back(gris);
 	colors.push_back(gris);
-	colors.push_back(gris);
+	colors.push_back(gris);*/
 
 	vec3 vector1 = vec3(3.0f, 3.0f,3.0f);//+ + +
 	vec3 vector2 = vec3(3.0f, 3.0f, -3.0f);// + + -
@@ -142,6 +154,13 @@ void Initialize() {
 	normals.push_back(vec3(0.0f, -1.0f, 0.0f));
 	normals.push_back(vec3(0.0f, -1.0f, 0.0f));
 	normals.push_back(vec3(0.0f, -1.0f, 0.0f));
+	for (int i = 0; i < 6; i++) {
+		textures.push_back(vec2(1.0f, 0.0f));
+		textures.push_back(vec2(1.0f, 1.0f));
+		textures.push_back(vec2(0.0f, 0.0f));
+		textures.push_back(vec2(0.0f, 1.0f));
+		
+	}
 
 	vector<unsigned int> indices = {
 		0, 1, 2, 2, 1, 3,
@@ -155,6 +174,7 @@ void Initialize() {
 	mesh.SetPositionAttribute(positions, GL_STATIC_DRAW, 0);
 	mesh.SetColorAttribute(colors, GL_STATIC_DRAW, 1);
 	mesh.SetNormalAttribute(normals, GL_STATIC_DRAW, 2);
+	mesh.SetTexCoordAttribute(textures, GL_STATIC_DRAW, 3);
 	mesh.SetIndices(indices, GL_STATIC_DRAW);
 
 	//glBindVertexArray(0);
@@ -165,18 +185,18 @@ void Initialize() {
 	program.SetAttribute(0, "VertexPosition");
 	program.SetAttribute(1, "VertexColor");
 	program.SetAttribute(2, "VertexNormal");
-
-	//program.Activate();
-	//program.SetUniformf("lightColor", lightColor.x,lightColor.y, lightColor.z);
+	program.SetAttribute(3, "VertexTextCoord");
+	program.LinkProgram();
+	program.Activate();
 	program.SetUniformf("lightColor", 1.0f, 1.0f, 1.0f);
 	program.SetUniformf("lightPosition", lightPosition.x, lightPosition.y, lightPosition.z);
 	program.SetUniformf("cameraPosition", _camera.GetPosition().x, _camera.GetPosition().y, _camera.GetPosition().z);
-	program.LinkProgram();
+	program.SetUniformi("DiffuseTexture", 0);
+	program.SetUniformi("DiffuseTexture2", 1);
+	//program.LinkProgram();
+	program.Deactivate();
 
-	//_camera.SetOrthographic(6.0f, 1.0f);
-	//_camera.MoveUp(10,true);
 	_camera.MoveForward(25,true);
-	//_camera.SetRotation(-30.0f,0.0f,0.0f);
 	_transform2.SetScale(12.0f, 0.2f, 12.0f);
 	_transform2.SetPosition(0.0f, -5.0f, 0.0f);
 }
@@ -185,7 +205,11 @@ void GameLoop() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	_transform.Rotate(0.02f, 0.02f, 0.02f, false);//Rotación Local
 	program.Activate();
-	//program.SetUniformf("lightColor", 1.0f, 1.0f, 1.0f);
+	glActiveTexture(GL_TEXTURE0);
+	crate.Bind();
+	glActiveTexture(GL_TEXTURE1);
+	cerdo.Bind();
+
 	program.SetUniformf("lightColor", lightColor.x, lightColor.y, lightColor.z);
 	program.SetUniformf("lightPosition", lightPosition.x, lightPosition.y, lightPosition.z);
 	program.SetUniformf("cameraPosition", _camera.GetPosition().x, _camera.GetPosition().y, _camera.GetPosition().z);
@@ -195,14 +219,21 @@ void GameLoop() {
 	program.SetUniformMatrix3("normalMatrix", normalMatrix);
 	program.SetUniformMatrix("mvplMatrix", _camera.GetViewProjection()* _transform.GetModelMatrix());
 	mesh.Draw(GL_TRIANGLES);
+	glActiveTexture(GL_TEXTURE0);
+	crate.Unbind();
+	glActiveTexture(GL_TEXTURE1);
+	cerdo.Unbind();
 
-
+	glActiveTexture(GL_TEXTURE0);
+	base.Bind();
 	modelMatrix2 = _transform2.GetModelMatrix();
 	normalMatrix2 = transpose(inverse(mat3(_transform2.GetModelMatrix())));
 	program.SetUniformMatrix("modelMatrix", modelMatrix2);
 	program.SetUniformMatrix3("normalMatrix", normalMatrix2);
 	program.SetUniformMatrix("mvplMatrix", _camera.GetViewProjection()* _transform2.GetModelMatrix());
 	mesh.Draw(GL_TRIANGLES);
+	glActiveTexture(GL_TEXTURE0);
+	base.Unbind();
 
 
 	program.Deactivate();
@@ -263,7 +294,15 @@ int main(int argc, char* argv[]) {
 	glEnable(GL_DEPTH_TEST);
 	std::cout << glGetString(GL_VERSION) << std::endl;
 	glClearColor(1.0f, 0.0f, 1.0f, 0.0f);
+	
 
+	ilInit();
+	//Queremos cambiar el punto de origen
+	ilEnable(IL_ORIGIN_SET);
+	//Configuramos el origen de las texturas generadas por devil como abajo a la izquierda
+	ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	// Configuración inicial de nuestro programa
 	Initialize();
 	// Iniciar la aplicación. El Main se pausará en esta línea hasta que se cierre la ventana.

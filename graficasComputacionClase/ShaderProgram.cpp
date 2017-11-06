@@ -99,3 +99,7 @@ void ShaderProgram::SetUniformf(std::string name, vec3 pos)
 	GLint uniformLocation = glGetUniformLocation(_programHandle, name.c_str());
 	glUniform3fv(uniformLocation,1 ,&pos[0]);
 }
+void ShaderProgram::SetUniformi(std::string name, int value) {
+	GLint uniformLocation = glGetUniformLocation(_programHandle, name.c_str());
+	glUniform1i(uniformLocation, value);
+}
