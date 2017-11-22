@@ -161,13 +161,7 @@
     <None Include="Default.vert" />
     <None Include="defaultTexture.frag" />
     <None Include="defaultTexture.vert" />
-    <None Include="depth.frag" />
-    <None Include="depth.vert" />
     <None Include="DiscardCenter.frag" />
-    <None Include="Shadow.frag" />
-    <None Include="Shadow.vert" />
-    <None Include="Shadow2.frag" />
-    <None Include="Shadow2.vert" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="base.jpg" />

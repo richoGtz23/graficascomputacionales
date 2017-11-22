@@ -24,10 +24,10 @@ void main()
 	vec3 specular = 0.5f * pow(max(dot(V, R),0.0f),64) * lightColor;
 	//vec3 phong = (ambient + diffuse + specular)*InterpolatedColor;
 	
-	vec4 texA =  texture2D(DiffuseTexture, InterpolatedTextCoord);
+	vec4 texA = texture2D(DiffuseTexture, InterpolatedTextCoord);
  	vec4 texB = texture2D(DiffuseTexture2, InterpolatedTextCoord);
- 	vec4 mixOne = mix(texA,texB, 0.6);
-	vec3 phong = (ambient+diffuse+specular) *mixOne;
+ 	vec4 mixOne = mix(texA,texB,0.2f);
+	vec3 phong = (ambient+diffuse+specular)*mixOne;
 	FragColor = vec4(phong , 1.0f);
 
 }

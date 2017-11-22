@@ -75,6 +75,9 @@
     <ClCompile Include="Texture2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Depthbuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Circle.h">
@@ -107,6 +110,9 @@
     <ClInclude Include="Texture2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Depthbuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Prueba.txt" />
@@ -128,6 +134,24 @@
       <Filter>Source Files</Filter>
     </None>
     <None Include="defaultTexture.frag">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="depth.vert">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="depth.frag">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="Shadow.frag">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="Shadow.vert">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="Shadow2.vert">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="Shadow2.frag">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>

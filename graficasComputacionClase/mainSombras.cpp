@@ -1,8 +1,8 @@
 /*********************************************************
 Materia: Gráficas Computacionales
 Fecha: 16 de agosto del 2017
-Autor: A01375051 Luis Ricardo Gutiérrez
-Autor: A01376121 Josep Romagosa 
+Autor: A01376121 Luis Ricardo Gutiérrez
+Autor: A01374637 Josep Romagosa 
 *********************************************************/
 #include <iostream>
 #include <GL/glew.h>
@@ -19,25 +19,31 @@ Autor: A01376121 Josep Romagosa
 #include "Camera.h"
 #include <IL/il.h>
 #include "Texture2D.h"
+#include "Depthbuffer.h"
+
 using namespace std;
 using namespace glm;
 
 Mesh mesh;
 ShaderProgram program;
+ShaderProgram program2;
+ShaderProgram program3;
 Transform _transform;
 Transform _transform2;
 Camera _camera;
+Camera _camera2;
 //int cont = 0;
 mat4 modelMatrix;
 mat3 normalMatrix;
 mat4 modelMatrix2;
 mat3 normalMatrix2;
-vec3  lightColor = vec3(1.0f, 1.0f, 1.0f);
-vec3 lightPosition = vec3(5.0f, 0.0f, 10.0f);
+vec3 lightColor = vec3(1.0f, 1.0f, 1.0f);
+vec3 lightPosition = vec3(-20.0f, -1.0f, 30.0f);
+vec3 lightPosition2 = vec3(0.0f, 20.0f, 0.0f);
 Texture2D crate;
 Texture2D cerdo;
 Texture2D base;
-
+Depthbuffer depth;
 
 void Initialize() {
 
@@ -177,66 +183,127 @@ void Initialize() {
 	mesh.SetTexCoordAttribute(textures, GL_STATIC_DRAW, 3);
 	mesh.SetIndices(indices, GL_STATIC_DRAW);
 
-	//glBindVertexArray(0);
+	glBindVertexArray(0);
+	
+	program2.CreateProgram();
+	program2.AttachShader("depth.vert",GL_VERTEX_SHADER);
+	program2.AttachShader("depth.frag", GL_FRAGMENT_SHADER);
+	program2.SetAttribute(0, "VertexPosition");
+	program2.LinkProgram();
+
+	program3.CreateProgram();
+	program3.AttachShader("Shadow.vert", GL_VERTEX_SHADER);
+	program3.AttachShader("Shadow.frag", GL_FRAGMENT_SHADER);
+	program3.SetAttribute(0, "VertexPosition");
+	program.SetAttribute(1, "VertexColor");
+	program.SetAttribute(2, "VertexNormal");
+	program.SetAttribute(3, "VertexTexCoord");
+	program3.LinkProgram();
+
+	program3.Activate();
+	program3.SetUniformf("Resolution", 400.0f, 400.0f);
+	program3.SetUniformf("LightColor", 1.0f, 1.0f, 1.0f);
+	program3.SetUniformf("LightPosition", lightPosition2.x, lightPosition2.y, lightPosition2.z);
+	program3.SetUniformf("CameraPosition", _camera.GetPosition().x, _camera.GetPosition().y, _camera.GetPosition().z);
+	program3.SetUniformi("DiffuseTexture", 0);
+	program3.SetUniformi("DiffuseTexture2", 1);
+	program3.SetUniformi("ShadowMap", 2);
+
+	program3.Deactivate();
 
 	program.CreateProgram();
-	program.AttachShader("Default.vert", GL_VERTEX_SHADER);
-	program.AttachShader("Default.frag", GL_FRAGMENT_SHADER);
+	program.AttachShader("Shadow2.vert", GL_VERTEX_SHADER);
+	program.AttachShader("Shadow2.frag", GL_FRAGMENT_SHADER);
 	program.SetAttribute(0, "VertexPosition");
 	program.SetAttribute(1, "VertexColor");
 	program.SetAttribute(2, "VertexNormal");
-	program.SetAttribute(3, "VertexTextCoord");
+	program.SetAttribute(3, "VertexTexCoord");
 	program.LinkProgram();
+
 	program.Activate();
-	program.SetUniformf("lightColor", 1.0f, 1.0f, 1.0f);
-	program.SetUniformf("lightPosition", lightPosition.x, lightPosition.y, lightPosition.z);
-	program.SetUniformf("cameraPosition", _camera.GetPosition().x, _camera.GetPosition().y, _camera.GetPosition().z);
+	program3.SetUniformf("Resolution", 400.0f, 400.0f);
+	program.SetUniformf("LightColor", 1.0f, 1.0f, 1.0f);
+	program.SetUniformf("LightPosition", lightPosition2.x, lightPosition2.y, lightPosition2.z);
+	program.SetUniformf("CameraPosition", _camera.GetPosition().x, _camera.GetPosition().y, _camera.GetPosition().z);
 	program.SetUniformi("DiffuseTexture", 0);
 	program.SetUniformi("DiffuseTexture2", 1);
-	//program.LinkProgram();
+	program3.SetUniformi("ShadowMap", 2);
 	program.Deactivate();
 
-	_camera.MoveForward(25,true);
-	_transform2.SetScale(12.0f, 0.2f, 12.0f);
+	_camera.SetPosition(0.0f, 20.0f, 50.0f);
+	_camera2.SetPosition(lightPosition2.x, lightPosition2.y, lightPosition2.z);
+	_camera2.Pitch(-90);
+	_camera.Pitch(-20);
+	_camera2.SetOrthographic(100.0f, 1.0f);
+	_transform.SetPosition(0.0f, 5.0f, 0.0f);
+	_transform2.SetScale(15.0f, 0.25f, 15.0f);
 	_transform2.SetPosition(0.0f, -5.0f, 0.0f);
+
+	depth.Create(2048);
 }
 
 void GameLoop() {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	_transform.Rotate(0.02f, 0.02f, 0.02f, false);//Rotación Local
+	depth.Bind();
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	program2.Activate();
+	program2.SetUniformMatrix("mvpMatrix", _camera2.GetViewProjection() * _transform.GetModelMatrix());
+	mesh.Draw(GL_TRIANGLES);
+	program2.SetUniformMatrix("mvpMatrix", _camera2.GetViewProjection() * _transform2.GetModelMatrix());
+	mesh.Draw(GL_TRIANGLES);
+
+	program2.Deactivate();
+	depth.Unbind();
+	glViewport(0, 0, 400, 400);
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	program.Activate();
 	glActiveTexture(GL_TEXTURE0);
 	crate.Bind();
 	glActiveTexture(GL_TEXTURE1);
 	cerdo.Bind();
+	glActiveTexture(GL_TEXTURE2);
+	depth.BindDepthMap();
 
-	program.SetUniformf("lightColor", lightColor.x, lightColor.y, lightColor.z);
-	program.SetUniformf("lightPosition", lightPosition.x, lightPosition.y, lightPosition.z);
-	program.SetUniformf("cameraPosition", _camera.GetPosition().x, _camera.GetPosition().y, _camera.GetPosition().z);
+	//program.SetUniformf("lightColor", lightColor.x, lightColor.y, lightColor.z);
+	//program.SetUniformf("LightPosition", lightPosition.x, lightPosition.y, lightPosition.z);
+	//program.SetUniformf("cameraPosition", _camera.GetPosition().x, _camera.GetPosition().y, _camera.GetPosition().z);
 	modelMatrix = _transform.GetModelMatrix();
 	normalMatrix = transpose(inverse(mat3(_transform.GetModelMatrix())));
 	program.SetUniformMatrix("modelMatrix", modelMatrix);
 	program.SetUniformMatrix3("normalMatrix", normalMatrix);
-	program.SetUniformMatrix("mvplMatrix", _camera.GetViewProjection()* _transform.GetModelMatrix());
+	program.SetUniformMatrix("mvpMatrix", _camera.GetViewProjection()* _transform.GetModelMatrix());
+	program.SetUniformMatrix("LightVPMatrix", _camera2.GetViewProjection());
 	mesh.Draw(GL_TRIANGLES);
 	glActiveTexture(GL_TEXTURE0);
 	crate.Unbind();
 	glActiveTexture(GL_TEXTURE1);
 	cerdo.Unbind();
+	glActiveTexture(GL_TEXTURE2);
+	depth.UnbindDepthMap();
+	program.Deactivate();
+
+	program3.Activate();
 
 	glActiveTexture(GL_TEXTURE0);
 	base.Bind();
+	glActiveTexture(GL_TEXTURE2);
+	depth.BindDepthMap();
 	modelMatrix2 = _transform2.GetModelMatrix();
 	normalMatrix2 = transpose(inverse(mat3(_transform2.GetModelMatrix())));
-	program.SetUniformMatrix("modelMatrix", modelMatrix2);
-	program.SetUniformMatrix3("normalMatrix", normalMatrix2);
-	program.SetUniformMatrix("mvplMatrix", _camera.GetViewProjection()* _transform2.GetModelMatrix());
+	program3.SetUniformMatrix("modelMatrix", modelMatrix2);
+	program3.SetUniformMatrix3("normalMatrix", normalMatrix2);
+	program3.SetUniformMatrix("mvpMatrix", _camera.GetViewProjection()* _transform2.GetModelMatrix());
+	program3.SetUniformMatrix("LightVPMatrix", _camera2.GetViewProjection());
 	mesh.Draw(GL_TRIANGLES);
 	glActiveTexture(GL_TEXTURE0);
 	base.Unbind();
+	glActiveTexture(GL_TEXTURE2);
+	depth.UnbindDepthMap();
 
-
-	program.Deactivate();
+	program3.Deactivate();
 
 
 
