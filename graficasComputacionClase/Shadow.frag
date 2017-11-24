@@ -29,7 +29,7 @@
  
  void main()
  {
-     vec3 ambient = 0.1f * LightColor;
+    vec3 ambient = 0.1f * LightColor;
  	vec3 L = normalize(LightPosition - pixelPosition);
  	vec3 R = normalize(reflect(-L,normalize(InterpolatedNormal)));
  	vec3 V = normalize(CameraPosition-pixelPosition);

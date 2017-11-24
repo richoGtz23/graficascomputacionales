@@ -221,9 +221,9 @@ void Initialize() {
 	program3.AttachShader("Shadow.vert", GL_VERTEX_SHADER);
 	program3.AttachShader("Shadow.frag", GL_FRAGMENT_SHADER);
 	program3.SetAttribute(0, "VertexPosition");
-	program.SetAttribute(1, "VertexColor");
-	program.SetAttribute(2, "VertexNormal");
-	program.SetAttribute(3, "VertexTexCoord");
+	program3.SetAttribute(1, "VertexColor");
+	program3.SetAttribute(2, "VertexNormal");
+	program3.SetAttribute(3, "VertexTexCoord");
 	program3.LinkProgram();
 
 	program3.Activate();
@@ -251,7 +251,7 @@ void Initialize() {
 	program.SetUniformf("CameraPosition", _camera.GetPosition().x, _camera.GetPosition().y, _camera.GetPosition().z);
 	program.SetUniformi("DiffuseTexture", 0);
 	program.SetUniformi("DiffuseTexture2", 1);
-	program3.SetUniformi("ShadowMap", 2);
+	program.SetUniformi("ShadowMap", 2);
 	program.Deactivate();
 
 	_camera.SetPosition(0.0f, 20.0f, 60.0f);
