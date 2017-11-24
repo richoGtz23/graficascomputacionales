@@ -20,17 +20,14 @@ Depthbuffer::~Depthbuffer() {
 
 void Depthbuffer::Create(int resolution) {
 	_resolution = resolution;
-	//buffer---
 	glGenFramebuffers(1, &_framebuffer);
 	glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
 	glDrawBuffer(GL_NONE);
 	glReadBuffer(GL_NONE);
 
-	//texture-----
 	glGenTextures(1, &_depthmap);
 	BindDepthMap();
 
-	//texture filter	// y wrap
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
@@ -40,8 +37,6 @@ void Depthbuffer::Create(int resolution) {
 
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, _depthmap, 0);
 
-
-	//UnbindDepthMap();
 	Unbind();
 }
 
