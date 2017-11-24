@@ -42,7 +42,7 @@
  	vec4 mixOne = mix(texA,texB,  0.2f );
  
  	float shadow = IsPixelOccluded(PixelPositionLightSpace);
- 	vec3 phong = (ambient + (1.0 - shadow) * (diffuse + specular)) * vec(mixOne);
+ 	vec3 phong = (ambient + (1.0 - shadow) * (diffuse + specular)) * vec3(mixOne);
  
  	FragColor = vec4(phong, 1.0f);
  }
